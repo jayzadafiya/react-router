@@ -32,7 +32,7 @@ import NewsletterPage, { action as newsletterAction } from './pages/Newsletter';
 import { action as manipulateEventAction } from './components/EventForm'
 import AuthenticationPage, { action as authAction } from './pages/Authentication';
 import { action as logoutAction } from './pages/Logout';
-import { loader as tokenLoder } from './util/auth';
+import { loader as tokenLoder, chekcAuth } from './util/auth';
 
 const router = createBrowserRouter([
   {
@@ -60,11 +60,17 @@ const router = createBrowserRouter([
                 element: <EventDetailPage />,
                 action: deleteEventAction
               },
-              { path: 'edit', element: <EditEventPage />, action: manipulateEventAction },
+              {
+                path: 'edit',
+                element: <EditEventPage />,
+                loader: chekcAuth,
+                action: manipulateEventAction
+              },
             ]
           },
           {
             path: 'new',
+            loader: chekcAuth,
             // action: newEventAction,
             action: manipulateEventAction,
             element: <NewEventPage />,
